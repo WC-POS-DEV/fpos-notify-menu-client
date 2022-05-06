@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="normalize.css" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <section id="now-serving" class="active">
+      <div class="header">Now Serving</div>
+    </section>
+    <section id="in-progress">
+      <div class="header header-alt">In Progress</div>
+    </section>
+
+    <script>
+      let inProgress = [];
+      let nowServing = [];
+
+      const createEl = (sale) => {
+        let birdSrc;
+        if (sale.checkNumber % 50 === 0) {
+          birdSrc = "images/reaper.svg";
+        } else if (sale.checkNumber % 20 === 0) {
+          birdSrc = "images/extra-hot.svg";
+        } else if (sale.checkNumber % 15 === 0) {
+          birdSrc = "images/hot.svg";
+        } else if (sale.checkNumber % 2 === 0) {
+          birdSrc = "images/medium.svg";
+        } else {
+          birdSrc = "images/chill.svg";
+        }
+        let saleEl = document.createElement("div");
+        saleEl.classList.add("sale");
+        let saleBirdDivEl = document.createElement("div");
+        saleBirdDivEl.classList.add("bird-container");
+        let saleBirdImgEl = document.createElement("img");
+        saleBirdImgEl.src = birdSrc;
+        saleBirdImgEl.classList.add("bird-image");
+        saleBirdDivEl.appendChild(saleBirdImgEl);
+        let saleTicketEl = document.createElement("div");
+        saleTicketEl.classList.add("sale-ticket");
+        saleTicketEl.innerText = sale.ticketNumber;
+        let saleInfoEl = document.createElement("div");
+        saleInfoEl.classList.add("sale-info");
+        if (sale.checkDescription.includes("$")) {
+          saleInfoEl.innerText = "Check: " + sale.checkNumber;
+        } else {
+          saleInfoEl.innerText = sale.checkDescription;
+        }
+        saleEl.appendChild(saleBirdDivEl);
+        saleEl.appendChild(saleTicketEl);
+        saleEl.appendChild(saleInfoEl);
+        return saleEl;
+      };
+
+      const createLists = () => {
+        let inProgressNode = document.getElementById("in-progress");
+        let nowServingNode = document.getElementById("now-serving");
+        while (!inProgressNode.lastElementChild.classList.contains("header")) {
+          inProgressNode.removeChild(inProgressNode.lastElementChild);
+        }
+        while (!nowServingNode.lastElementChild.classList.contains("header")) {
+          nowServingNode.removeChild(nowServingNode.lastElementChild);
+        }
+        inProgress.forEach((sale) =>
+          inProgressNode.appendChild(createEl(sale))
+        );
+        nowServing.forEach((sale) =>
+          nowServingNode.appendChild(createEl(sale))
+        );
+      };
+
+      createLists();
+
+      const getData = () => {
+        fetch("http://192.168.50.99:5000/fpos/board/")
+          .then((res) => {
+            res.json().then((data) => {
+              inProgress = data.inProgress;
+              nowServing = data.notifications.filter(
+                (notif) => notif.type === "BOARD"
+              );
+              createLists();
+            });
+          })
+          .catch((err) => console.log(err));
+      };
+
+      setInterval(getData, 10000);
+      getData();
+    </script>
+  </body>
+</html>

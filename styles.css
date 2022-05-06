@@ -1,0 +1,124 @@
+@font-face {
+  font-family: "Chaloops";
+  src: url("fonts/chaloops.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Intro";
+  src: url("fonts/intro.woff2") format("woff2");
+}
+
+html {
+  font-size: 8px;
+}
+
+body {
+  display: flex;
+  padding: 1rem;
+  height: 100vh;
+  overflow: hidden;
+  background: url("images/scoville-bg.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+#in-progress,
+#now-serving {
+  font-family: "Chaloops";
+  width: 48%;
+  overflow: hidden;
+  margin: 0rem 1rem;
+  transition-property: transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 500ms;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 0 #0000, 0 0 #0000;
+  padding: 2rem;
+}
+
+.header {
+  width: 100%;
+  padding: 2rem;
+  background-color: #e31e25;
+  border-radius: 1rem;
+  color: white;
+  font-size: 4rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.header-alt {
+  background-color: #fdcd07;
+  color: #444;
+}
+
+.sale {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding-top: 1rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding: 1rem;
+  position: relative;
+  margin-top: 2rem;
+}
+
+.sale > .bird-container {
+  border-radius: 100%;
+  background-color: white;
+  position: absolute;
+  left: 0;
+  width: 10rem;
+  height: 10rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bird-image {
+  width: 8rem;
+  height: 8rem;
+}
+
+.sale > div {
+  padding: 1rem 1.5rem;
+  color: #374151;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+.sale > .sale-info {
+  width: 100%;
+  height: 8rem;
+  display: flex;
+  align-items: center;
+  color: #444;
+  background-color: white;
+  border-radius: 0 0.5rem 0.5rem 0;
+  overflow-x: hidden;
+  white-space: nowrap;
+  font-family: "Intro";
+  font-size: 4rem;
+}
+
+#now-serving > .sale > .sale-ticket {
+  background-color: #e31e25;
+  color: white;
+}
+
+#in-progress > .sale > .sale-ticket {
+  background-color: #374151;
+  color: white;
+}
+
+.sale > .sale-ticket {
+  margin-left: 6rem;
+  width: 16rem;
+  height: 8rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  font-size: 4rem;
+}
